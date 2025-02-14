@@ -1,0 +1,28 @@
+name: CI/CD Pipeline
+on:
+  push:
+    branches:
+      - main
+      
+env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_USER: ${{ secrets.DB_ADMIN_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+
+jobs:
+  deploy:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout Code
+        uses: "actions/checkout@v2"
+
+      - name: Install MySQL
+        run: |
+          sudo apt-get update 
+          sudo apt-get install -y mysql-client
+
+      - name: Deploy to Database
+        run: mysql -h $DB_HOST -u $DB_USER -p $DB_PASSWORD $DB_NAME < schema_change_git.sql
+
+  
