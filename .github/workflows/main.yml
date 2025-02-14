@@ -23,6 +23,6 @@ jobs:
           sudo apt-get install -y mysql-client
 
       - name: Deploy to Database
-        run: mysql -h $DB_HOST -u $DB_USER -p $DB_PASSWORD $DB_NAME < schema_change_git.sql
+        run: mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD $DB_NAME < schema_change_git.sql
 
   
